@@ -1,10 +1,9 @@
-import {formatInput} from '..js\input.js';
-import {formatNumber} from '..js\numbers.js'
+import Counter from '../js/module/count.js'
 
 
-const counterItems = document.querySelectorAll('.counter')
+const countCalories = document.querySelectorAll('.counter');
 
-counterItems.forEach((item) => {
-    const counter = new Counter(item);
-    return counter.init();
-})
+countCalories.forEach((element) => {
+  const counter = new Counter(element);
+  counter.init();
+});
