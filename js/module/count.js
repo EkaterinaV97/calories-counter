@@ -2,24 +2,27 @@ import {formatInput} from '../format/input.js';
 import Result from '../module/result.js';
 
 const ActivityRatio = {
-    Min: 1.2,
-    Low: 1.375,
-    Medium: 1.55,
-    High: 1.725,
-    VeryHigh: 1.9
+    MIN: 1.2,
+    LOW: 1.375,
+    MEDIUM: 1.55,
+    HIGH: 1.725,
+    VERYHIGH: 1.9
 }
 
 const PercentOfNormal = {
-    Min: 0.85,
-    Max: 1.15
+    MIN: 0.85,
+    MAX: 1.15
 }
 
 const FormulaNumbers = {
-    Weight: 10,
-    Height: 6.25,
-    Age: 5,
-    Female: 161,
-    Male: -5
+    WEIGHT: 10,
+    HEIGHT: 6.25,
+    AGE: 5
+}
+
+const GenderConstant = {
+    FEMALE: 161,
+    MALE: -5
 }
 
 export default class Counter {
@@ -90,24 +93,23 @@ export default class Counter {
 
     /* Общее количество калорий */
     getTotalCalories() {
-        const age = FormulaNumbers.Age * this.age.value;
-        const weight = FormulaNumbers.Weight * this.weight.value;
-        const height = FormulaNumbers.Height * this.height.value;
-        const gender = this.gender.value;
-        const activity = ActivityRatio[this.activity.value];
+        const age = FormulaNumbers.AGE * this.age.value;
+        const weight = FormulaNumbers.WEIGHT * this.weight.value;
+        const height = FormulaNumbers.HEIGHT * this.height.value;
+        const gender = GenderConstant[this.gender.value.toUpperCase()];
+        const activity = ActivityRatio[this.activity.value.toUpperCase()];
 
         const caloriesNorm = ((weight + height - age - gender) * activity);
         return Math.round(caloriesNorm);
-
     }
 
     /* Минимальное кол-во */
-    getMinimalCalories(caloriesNorm) {
-      return Math.round(caloriesNorm * PercentOfNormal.Min);
+    getMinimalCalories() {
+      return Math.round(this.getTotalCalories() * PercentOfNormal.MIN);
     }
 
    /*  Максимальное кол-во */
-    getMaximalCalories(caloriesNorm) {
-      return Math.round(caloriesNorm * PercentOfNormal.Max);
+    getMaximalCalories() {
+      return Math.round(this.getTotalCalories() * PercentOfNormal.MAX);
     }
 }
